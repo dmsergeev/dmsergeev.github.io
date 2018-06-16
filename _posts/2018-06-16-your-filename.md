@@ -1,9 +1,6 @@
 ---
-published: false
+published: true
 ---
-## Test Post
+## Hello world
 
-Hello
-###
-
-hi
+Hello world!
