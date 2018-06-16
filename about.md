@@ -4,5 +4,4 @@ title: About
 permalink: /about/
 published: true
 ---
-
-Decided to start a blog to document all interesting problems/findings I encounter while programming.
+A blog for the problems I encounter at work, and other interesting programming related topics.
