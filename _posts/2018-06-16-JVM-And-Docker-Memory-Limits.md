@@ -3,7 +3,7 @@ published: true
 ---
 In my first blog post I want to talk a little bit about running JVM based applications in Docker containers, specifically about the memory gotchas that you might run into.
 
-If you were to run an application(on JDK < 10, see last paragraph for changes in JDK 10) in a container without specifying the heap size limit with an `-Xmx` flag(note that this option alone is not sufficient for production, see [here](https://medium.com/@matt_rasband/dockerizing-a-spring-boot-application-6ec9b9b41faf)) the application might unexpectedly crash with an `OutOfMemoryError` exception. 
+If you were to run an application(on JDK < 10, see last paragraph for changes in JDK 10) in a container without specifying the heap size limit with an `-Xmx` flag(note that this option alone is not sufficient for production, see [here](https://medium.com/@matt_rasband/dockerizing-a-spring-boot-application-6ec9b9b41faf)) the application might unexpectedly crash with an `OutOfMemoryError`. 
 
 The reason for that is twofold:
 - The memory allocated to the container is lower than the host's available RAM(by default, Docker will use all available memory, you can look it up by running `docker stats`)
