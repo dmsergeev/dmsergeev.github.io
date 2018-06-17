@@ -19,4 +19,4 @@ Starting from JDK 10 the JVM is container-aware by default([JDK-8146115](https:/
 
 I am excited to finally update to the next LTS release and take advantage of the improved Docker support for the JVM!
 
-*Note that this option alone is not sufficient for production, see [here](https://medium.com/@matt_rasband/dockerizing-a-spring-boot-application-6ec9b9b41faf))
+*Note that this option alone is not sufficient for production, see [here](https://medium.com/@matt_rasband/dockerizing-a-spring-boot-application-6ec9b9b41faf).
