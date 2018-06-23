@@ -1,7 +1,7 @@
 ---
 published: true
 ---
-Last Friday I ran into a very peculiar issue with one of our services, an issue that led to a discovery of a bug in one of Spring Boot actuators.
+Last Friday I ran into a very peculiar issue with one of our services, an issue that led to a discovery of a bug in one of Spring Boot actuators...
 
 The service in question is a dead simple Spring Boot application that exposes an HTTP endpoint that returns monotonically increasing numbers. Hard to get this wrong.
 
