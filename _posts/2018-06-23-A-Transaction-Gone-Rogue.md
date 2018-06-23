@@ -7,7 +7,7 @@ The service in question is a dead simple Spring Boot application that exposes an
 
 In the morning we started getting reports of customers getting duplicate numbers from the service. Impossible. The service is super simple, not to mention that it has been tested numerous times by multiple developers and a QA engineer. 
 
-We tried reproducing the issue in a qa environment with no success. It was working perfectly fine, and seemingly no way for the old numbers to ever be returned again.
+We tried reproducing the issue in a qa environment with no success. It was working perfectly fine, and seemingly there was no way for the old numbers to ever be returned again.
 
 I decided to look at the database stats. What I saw was an open connection with an idling transaction that was used by the application and Spring Boot db health checks. 
 
@@ -41,9 +41,3 @@ I refreshed the SBA page.
 Liquibase was not cleaning it up after itself and was leaving the auto commit set to false for all subsequent consumers of that connection.
 
 Long story short, the problem was a Spring Liquibase actuator bug. It was not properly closing the connection after retrieving the information from Liquibase tables. To fix this I created 2 pull requests(for Spring Boot [1.5.x](https://github.com/spring-projects/spring-boot/pull/13559) and [2.x](https://github.com/spring-projects/spring-boot/pull/13560)).
-
-
-
-
-
-
