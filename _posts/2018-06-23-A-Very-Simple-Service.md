@@ -7,7 +7,7 @@ The service in question is a dead simple Spring Boot application that exposes an
 
 In the morning we started getting reports of customers getting duplicate numbers from the service. Impossible. The service is super simple, not to mention that it has been tested numerous times by multiple developers and a QA engineer. 
 
-We tried reproducing the issue in a qa environment with no success. It was working perfectly fine, and seemingly there was no way for the old numbers to ever be returned again.
+We tried reproducing the issue in a qa environment with no success. It was working perfectly fine, and seemingly no way for the old numbers to ever be returned again.
 
 I decided to look at the database stats. What I saw was an open connection with an idling transaction that was used by the application and Spring Boot db health checks. 
 
@@ -19,9 +19,9 @@ Where did the transaction come from? It was seemingly random, it would pop up ou
 
 Then I turned my watch to the app health and other stats in [Spring Boot Admin](https://github.com/codecentric/spring-boot-admin). It is an extremely useful application that connects to the health and other endpoints or 'actuators' in Spring Boot applications. You can use it to take a heapdump, change logging level, etc.
 
-After going there a couple of times I detected a most bizarre pattern -- every time I open service details on SBA the transaction starts going. Down to the millisecond. How could SBA possibly start a transaction?
+After going there a couple of times I detected a most bizarre pattern -- every time I open the service details on SBA the transaction begins. How could SBA possibly start a transaction?
 
-Everything became clear when I switched logging level to DEBUG, and went to the SBA whilst looking at `docker logs --follow`:
+Everything became clear when I switched logging level to DEBUG, and went to the SBA while looking at `docker logs --follow`:
 
 `[main] [] [DEBUG] liquibase -- Connected to dev@jdbc:postgresql`
 
@@ -32,15 +32,15 @@ Everything became clear when I switched logging level to DEBUG, and went to the 
 
 Looks fine. Liquibase, which is what we use to version our db, was changing the auto commit value. Auto commit is a property of `JDBCConnection` that, if set to false, starts a transaction and keeps it open, making the user of the connection either commit or roll it back.
 
-Ok, I thought. Should be fine as long as it sets it back. 
+Ok, I thought. Should be fine as long as Liquibase sets it back. 
 
 I refreshed the SBA page.
 
 `[DEBUG] liquibase -- Not adjusting the auto commit mode; it is already false`
 
-It was not cleaning it up after itself and was leaving the auto commit set to false for all subsequent consumers of that connection.
+Liquibase was not cleaning it up after itself and was leaving the auto commit set to false for all subsequent consumers of that connection.
 
-Long story short, it turned out to be a Spring Liquibase actuator bug. It was not properly closing the connection after retrieving the information from Liquibase tables. This resulted in 2 pull requests(for Spring Boot [1.5.x](https://github.com/spring-projects/spring-boot/pull/13559) and [2.x](https://github.com/spring-projects/spring-boot/pull/13560)).
+Long story short, the problem was a Spring Liquibase actuator bug. It was not properly closing the connection after retrieving the information from Liquibase tables. To fix this I created 2 pull requests(for Spring Boot [1.5.x](https://github.com/spring-projects/spring-boot/pull/13559) and [2.x](https://github.com/spring-projects/spring-boot/pull/13560)).
 
 
 
