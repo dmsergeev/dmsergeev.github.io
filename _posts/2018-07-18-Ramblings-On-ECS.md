@@ -1,6 +1,6 @@
 ---
 published: true
-title: 'Blogging Like a ECS ECS ~!@#'
+title: Ramblings on ECS
 ---
 
 
