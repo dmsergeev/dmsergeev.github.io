@@ -40,4 +40,4 @@ I refreshed the SBA page.
 
 Liquibase was not cleaning it up after itself and was leaving the auto commit set to false for all subsequent consumers of that connection.
 
-Long story short, the problem was a Spring Liquibase actuator bug. It was not properly closing the connection after retrieving the information from Liquibase tables. To fix this I created 2 pull requests(for Spring Boot [1.5.x](https://github.com/spring-projects/spring-boot/pull/13559) and [2.x](https://github.com/spring-projects/spring-boot/pull/13560)).
+Long story short, the problem was a Spring Liquibase actuator bug. It was not properly closing the connection after retrieving the information from Liquibase tables. To fix this I created [a pull request](https://github.com/spring-projects/spring-boot/pull/13559).
