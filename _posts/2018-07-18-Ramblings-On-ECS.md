@@ -8,7 +8,7 @@ First, a little bit of background. AWS ECS is a managed container orchestration 
 
 - **Task**, this is basically your application. Can run multiple containers in 1 task. Think of them as Pods in k8s.
 - **Scheduled task**, runs tasks on a user defined schedule. In k8s that would be a CronJob resource.
-- **Service**, a self-healing collection of tasks. Allows you to specify the number of instances of a task, auto-scaling policy, and deployment strategy. It also interacts with your elastic load balancers to register/deregister targets. Even though this sounds a like a lot, it lacks some features of Deployment resources in k8s.
+- **Service**, a self-healing collection of tasks. Allows you to specify the number of instances, auto-scaling policy, and deployment strategy. It also interacts with your ElasticLoadBalancers to register/deregister targets. Even though this sounds a like a lot, it lacks some features of Deployment resources in k8s.
 
 An important note to make here is that there's no way to run ECS workloads on anything but EC2(either managed by you, or by using Fargate[1]), meaning that once you start using it, you are pretty much locked into using AWS, whereas with k8s you can run your infrastracture anywhere. This is probably my biggest gripe with ECS, and to be honest, with most of AWS services in general. They are tightly coupling their offerings, which is great for them, but not the consumer. There's an upside to this, however. Since everything is so coupled you can easily take advantage of other services with almost no configuration(ELB, CloudWatch).
 
@@ -23,9 +23,10 @@ Other problems I've experienced with it:
 - ECS agent randomly dying or not doing anything requiring us to kill the node.
 - A task that ECS reported was removed from the target group was still receiving connections, this might've been an ELB issue, haven't figured it out. Support seems to have forgotten about my ticket.
 
-
 All in all, I see no reason for somebody who's choosing an orchestration tool to go with ECS. It just can't compete with Kubernetes in terms of features(this will probably need another post) and, now, ease of operation with a lot of cloud providers offering managed clusters. Not to mention that k8s is fully open-source with thousands of people contributing, whereas ECS not only proprietary, but also locks you into using AWS.
 
+
+All new services that we work on now will be deployed and managed by k8s.
 
 
 [1] Fargate is a service that allows you to run containers without managing the EC2 instances. It integrates tightly with ECS and works pretty well, in my experience. One problem with it is that if you run your containers with it you **cannot** use private image registries apart from ECR.
