@@ -1,5 +1,6 @@
 ---
 published: true
+title: JVM And Docker Memory Limits
 ---
 In my first blog post I want to talk a little bit about running JVM based applications in Docker containers, specifically about the memory gotchas that you might run into.
 
