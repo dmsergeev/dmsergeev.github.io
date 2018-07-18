@@ -1,6 +1,6 @@
 ---
 published: true
-title: Ramblings on ECS
+title: Ramblings On ECS
 ---
 
 
