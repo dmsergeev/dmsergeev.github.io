@@ -1,5 +1,6 @@
 ---
 published: true
+title: A Transaction Gone Rogue
 ---
 Last Friday I ran into a very peculiar issue with one of our services, an issue that led to a discovery of a bug in one of Spring Boot actuators...
 
