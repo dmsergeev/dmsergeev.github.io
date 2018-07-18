@@ -2,7 +2,7 @@
 published: true
 title: Ramblings On ECS
 ---
-After working with ECS for quite some time I decided to talk a little bit about my experience with it and superficially compare it to Kubernetes.
+After working with ECS for quite some time I decided to describe the problems I've had with it and superficially compare it to Kubernetes.
 
 First, a little bit of background. AWS ECS is a managed container orchestration service with which you can deploy and run your dockerized applications. It supports various types of 'workloads':
 
