@@ -16,15 +16,16 @@ An important note to make here is that there's no way to run ECS workloads on an
 At work we are running  ~50 services in multiple availability zones for each environment. Most of the time it works fine... except when it doesn't.
 
 2 major problems I can group under a **Lack of Visibility** umbrella:
-- If your task abruptly exited with a non-zero code there's no way to see why. The ECS event log console is empty. All information you can get is an exit code and endless task restarts if it was a part of a service. To actually troubleshoot this, you'd have to ssh into the EC2 instance and examine the logs yourself. We could probably improve this by using CloudWatch log(the UI to view the logs definetely needs improvements) driver. Compare it to `kubectl logs`...
-- If your cluster has no capacity to place the task, ECS events log will say just that and... that's it. Your deployment is basically stalled, and you wouldn't even know that. Even after you add a EC2 node to the cluster, there's no information available(I couldn't find anything) on when it's going to try again. Sometimes it's 15 minutes, sometimes it's over an hour(!). The workaround here is to trigger it manually. Not good.
+- If your task abruptly exited with a non-zero code there's no way to see why. The ECS event log console is empty. All information you can get is an exit code and endless task restarts if it was a part of a service. To actually troubleshoot this, you'd have to ssh into the EC2 instance and examine the logs yourself. We could probably improve this by using CloudWatch log(seems like the UI for it hasn't been updated in 20 years) driver. Compare it to `kubectl logs`...
+- If your cluster has no capacity to place the task, ECS events log will say just that and... that's it. Your deployment is basically stalled, and you wouldn't even know that. Even after you add a EC2 node to the cluster, there's no information available(I couldn't find anything) on when it's going to try again. Sometimes it's 15 minutes, sometimes it's over an hour(!). The workaround here is to monitor the deployments and re-trigger them manually if there are issues. Not good.
 
 Other problems I've experienced with it:
 - ECS agent randomly dying or not doing anything requiring us to kill the node.
 - A task that ECS reported was removed from the target group was still receiving connections, this might've been an ELB issue, haven't figured it out. Support seems to have forgotten about my ticket.
 
 
-All in all, I see no reason for somebody who's choosing an orchestration system to go with ECS. It just can't compete with Kubernetes in terms of features(this will probably need another post) and, now, ease of operation with a lot of cloud providers offering managed clusters. Not to mention that k8s is fully open-source with thousands of people contributing, whereas ECS not only proprietary, but also locks you into using AWS.
+All in all, I see no reason for somebody who's choosing an orchestration tool to go with ECS. It just can't compete with Kubernetes in terms of features(this will probably need another post) and, now, ease of operation with a lot of cloud providers offering managed clusters. Not to mention that k8s is fully open-source with thousands of people contributing, whereas ECS not only proprietary, but also locks you into using AWS.
+
 
 
 [1] Fargate is a service that allows you to run containers without managing the EC2 instances. It integrates tightly with ECS and works pretty well, in my experience. One problem with it is that if you run your containers with it you **cannot** use private image registries apart from ECR.
