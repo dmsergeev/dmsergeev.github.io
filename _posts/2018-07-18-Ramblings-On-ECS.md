@@ -26,7 +26,4 @@ Other problems I've experienced with it:
 All in all, I see no reason for somebody who's choosing an orchestration tool to go with ECS. It just can't compete with Kubernetes in terms of features(this will probably need another post) and, now, ease of operation with a lot of cloud providers offering managed clusters. Not to mention that k8s is fully open-source with thousands of people contributing, whereas ECS not only proprietary, but also locks you into using AWS.
 
 
-All new services developed at my company will be deployed and managed by k8s.
-
-
 [1] Fargate is a service that allows you to run containers without managing the EC2 instances. It integrates tightly with ECS and works pretty well, in my experience. One problem with it is that if you run your containers with it you **cannot** use private image registries apart from ECR.
