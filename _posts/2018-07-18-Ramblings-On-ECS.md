@@ -17,7 +17,7 @@ At work we are running  ~50 services in multiple availability zones for each env
 
 2 major problems I can group under a **Lack of Visibility** umbrella:
 - If your task abruptly exited with a non-zero code there's no way to see why. The ECS event log console is empty. All information you can get is an exit code and endless task restarts if it was a part of a service. To actually troubleshoot this, you'd have to ssh into the EC2 instance and examine the logs yourself. We could probably improve this by using CloudWatch log(seems like the UI for it hasn't been updated in 20 years) driver. Compare it to `kubectl logs`...
-- If your cluster has no capacity to place the task, ECS events log will say just that and... that's it. Your deployment is basically stalled, and you wouldn't even know that. Even after you add a EC2 node to the cluster, there's no information available(I couldn't find anything) on when it's going to try again. Sometimes it's 15 minutes, sometimes it's over an hour(!). The workaround here is to monitor the deployments and re-trigger them manually if there are issues. Not good.
+- If your cluster has no capacity to place a task, ECS events console will log that and... that's it. Your deployment is basically stalled, and you wouldn't even know that. Even after you add a EC2 node to the cluster, there's no information available(I couldn't find anything) on when it's going to try again. Sometimes it's 15 minutes, sometimes it's over an hour(!). The workaround here is to monitor the deployments and re-trigger them manually if there are issues. Not good.
 
 Other problems I've experienced with it:
 - ECS agent randomly dying or not doing anything requiring us to kill the node.
