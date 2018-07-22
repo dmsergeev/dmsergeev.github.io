@@ -1,6 +1,6 @@
 ---
 published: true
-title: Ramblings On ECS
+title: Ramblings on ECS
 ---
 After working with ECS for quite some time I decided to describe the problems I've had with it and superficially compare it to Kubernetes.
 
