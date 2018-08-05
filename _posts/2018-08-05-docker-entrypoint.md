@@ -1,5 +1,6 @@
 ---
-published: false
+published: true
+title: Beward the shell form of ENTRYPOINT
 ---
 ## A New Post
 
