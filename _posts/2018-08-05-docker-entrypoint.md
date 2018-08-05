@@ -27,7 +27,7 @@ After a little bit of googling, I realized that `ENTRYPOINT` in all of our Docke
 
 You can also accidentally be using a shell form and not knowing about it. For some reason, Docker engineers decided to make `ENTRYPOINT node app.js` a shell form, so you'd have a shell process even though it was not explicitly requested(like with `ENTRYPOINT ["sh", "-c"]`). I really don't like when software that does that. Very confusing.
 
-**The takeaway here is that you should avoid shell form and always use exec form**.
+**You should avoid the shell form and always use the exec form of entrypoint/cmd instruction.**
 
 
 [1] https://docs.docker.com/engine/reference/builder/#entrypoint
