@@ -18,8 +18,11 @@ I decided to verify the theory and started one of the services locally circumven
 
 For some reason, a dockerized application was ignoring `SIGTERM`. I ran `docker exec CONTAINER_ID ps -o "pid ppid command"` to see the process tree:
 >[ec2-user@host ~]$ ps -o "pid ppid command"
+>
 >  PID  PPID     COMMAND
+>
 >    6     1   java -jar
+>
 >    1     0   sh -c  
 
 Turns out our application is, actually, a child of the shell process. The problem is that **the shell does not proxy termination signals down to its children**.
