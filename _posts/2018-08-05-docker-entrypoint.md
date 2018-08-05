@@ -10,20 +10,15 @@ This is a big problem. Without a graceful shutdown, all in-flight HTTP requests 
 
 I decided to verify the theory and started one of the services locally circumventing Docker, then I ran `kill` which sends a `SIGTERM` signal to the application, looked at the logs and there they were, among others:
 
->[INFO] Stopping service [Tomcat]
->
->[INFO] Stopping ProtocolHandler ["http-nio-9104"]
->
->[INFO] Destroying ProtocolHandler ["http-nio-9104"]
+`[INFO] Stopping service [Tomcat]`
+`[INFO] Stopping ProtocolHandler ["http-nio-9104"]`
+`[INFO] Destroying ProtocolHandler ["http-nio-9104"]`
 
 For some reason, a dockerized application was ignoring `SIGTERM`. I ran `docker exec CONTAINER_ID ps -o "pid ppid command"` to see the process tree:
->[ec2-user@host ~]$ ps -o "pid ppid command"
->
->  PID  PPID     COMMAND
->
->    6     1   java -jar
->
->    1     0   sh -c  
+`[ec2-user@host ~]$ ps -o "pid ppid command"`
+`  PID  PPID     COMMAND`
+`    6     1   java -jar`
+`    1     0   sh -c`
 
 Turns out our application is, actually, a child of the shell process. The problem is that **the shell does not proxy termination signals down to its children**.
 
