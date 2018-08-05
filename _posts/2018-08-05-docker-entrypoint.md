@@ -2,7 +2,7 @@
 published: true
 title: A Problem with the Shell Execution Form in Docker
 ---
-Look at the Dockerfiles for your applications. Do you see `ENTRYPOINT` or `CMD` instructions in the following format: `ENTRYPOINT node app.js` or `ENTRYPOINT ["sh", "-c"", "node app.js"]`? If yes, then you might have a problem.
+Look at the Dockerfiles for your applications. Do you see `ENTRYPOINT` or `CMD` instructions in the following format: `ENTRYPOINT node app.js` or `ENTRYPOINT ["sh", "-c"", "node app.js"]`? If yes, then you have a problem.
 
 The other day I had a realization that I had never seen our containerized applications gracefully shut down. You would usually expect to see at least a couple of log messages about closing the application context(we use Spring) on a `SIGTERM` signal(it is a termination signal politely asking the application to shut down, as opposed to `SIGKILL` which is an immediate termination). I checked Kibana--nothing. I ssh'ed into an ECS EC2 instance to check the logs and, again, saw nothing. The applications were being instantly killed.
 
