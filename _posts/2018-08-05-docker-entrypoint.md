@@ -8,7 +8,7 @@ The other day I had a realization that I had never seen our containerized applic
 
 This is a big problem. Without graceful shutdown all in-flight HTTP requests are dropped. The message consumers might not finish processing a batch of messages. The list goes on. We haven't actually noticed any problems just because most of our services expose HTTP endpoints and we do rolling updates to ensure no downtime--the system removes the application from  a load balancer and then drains connections for awhile before stopping it. Also, up until very recently we did not have high throughput Kafka consumers/producers. I was very lucky to catch this before we ramped up the volume on these services.
 
-I decided to double check and started one of services locally circumventing Docker, then I ran `kill` which sends a `SIGTERM` signal to the application. Looked at the logs and there they were:
+I decided to double check and started one of services locally circumventing Docker, then I ran `kill` which sends a `SIGTERM` signal to the application, looked at the logs and there they were:
 
 `[INFO] Stopping service [Tomcat]`
 
