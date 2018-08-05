@@ -1,6 +1,6 @@
 ---
 published: true
-title: A Problem with the Shell Execution Form in Docker
+title: Execution Form Matters
 ---
 Look at the Dockerfiles for your applications. Do you see `ENTRYPOINT` or `CMD` instructions in the following format: `ENTRYPOINT node app.js` or `ENTRYPOINT ["sh", "-c"", "node app.js"]`? If yes, then you have a problem.
 
