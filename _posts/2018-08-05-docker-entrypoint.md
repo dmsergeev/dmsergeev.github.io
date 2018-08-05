@@ -17,6 +17,7 @@ I decided to verify the theory and started one of the services locally circumven
 `[INFO] Destroying ProtocolHandler ["http-nio-9104"]`
 
 For some reason, a dockerized application was ignoring `SIGTERM`. I ran `docker exec CONTAINER_ID ps -o "pid ppid command"` to see the process tree:
+
 `[ec2-user@host ~]$ ps -o "pid ppid command"`
 
 `  PID  PPID     COMMAND`
