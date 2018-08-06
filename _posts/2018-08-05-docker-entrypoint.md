@@ -1,6 +1,6 @@
 ---
 published: true
-title: Execution Form Matters
+title: Always Use Exec Form of Entrypoint
 ---
 Look at the Dockerfiles for your applications. Do you see `ENTRYPOINT` or `CMD` instructions in the following format: `ENTRYPOINT node app.js` or `ENTRYPOINT ["sh", "-c"", "node app.js"]`? If yes, then you have a problem.
 
@@ -16,6 +16,7 @@ I decided to verify the theory and started one of the services locally circumven
 
 `[INFO] Destroying ProtocolHandler ["http-nio-9104"]`
 
+For some reason, a dockerized application was ignoring `SIGTERM`. I ran `docker exec CONTAINER_ID ps -o "pid ppid command"` to see the process tree:
 For some reason, a dockerized application was ignoring `SIGTERM`. I ran `docker exec CONTAINER_ID ps -o "pid ppid command"` to see the process tree:
 
 `[ec2-user@host ~]$ ps -o "pid ppid command"`
