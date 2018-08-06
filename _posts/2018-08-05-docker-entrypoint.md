@@ -28,7 +28,7 @@ For some reason, a dockerized application was ignoring `SIGTERM`. I ran `docker 
 
 Turns out our application is, actually, a child of the shell process, and **the shell does not proxy termination signals down to its children**.
 
-The `ENTRYPOINT` instruction in all of our Dockerfiles was in the shell form[1], as opposed to exec form that does not spawn a shell process. It looked like this:
+The `ENTRYPOINT` instruction in all of our Dockerfiles was in the shell form[1], in contrast with the exec form that does not spawn a shell process. The file looked like this:
 `ENTRYPOINT ["sh", "-c", "java -jar /app.jar "]`. Changing it to `ENTRYPOINT ["java", "-jar /app.jar"]` fixed the issue and I started to see shutdown logs in Kibana. 
 
 I am yet to find a real-life use case for the shell form... Apart from a need to pass in environment variables? Not sure why it would be needed, though, when you could look them up in the code in most runtimes.
